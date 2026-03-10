@@ -1,0 +1,9 @@
+__pycache__/
+.venv/
+.env
+static/videos/
+static/uploads/
+*.pyc
+.ipynb_checkpoints/
+reflog.txt
+stash.txt

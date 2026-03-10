@@ -1,0 +1,34 @@
+{
+  "templates": [
+    {
+      "id": "energetic",
+      "name": "⚡ 에너지 (Energy)",
+      "desc": "빠른 템포로 매력 포인트를 보여주는 홍보 영상",
+      "visual_keywords": "Fast-paced, Vibrant, High Saturation, appetizing lighting, steam rising, delicious texture, sizzling, crispy golden surface, glossy sauce, fresh ingredients popping with color",
+      "camera_setup": "Dynamic tracking shot, fast dolly zoom, handheld energy with slight shake, whip pan transitions, high shutter speed (1/500s), 24mm wide-angle lens, deep focus, overhead bird's-eye angle for table spread, low-angle hero shot for dramatic food reveal",
+      "negative_prompt": "blurry, dark, slow, low resolution, text overlay, subtitles, watermark, distorted hands, fingers clipping through food, unnatural mouth movements, messy eating, food falling from mouth, chopsticks bending unnaturally, cross-eyed gaze, extra fingers, deformed utensils",
+      "food_focus_rule": "Prioritize the VISUAL TEXTURE and STEAM of the food over human eating actions. Show satisfied facial expressions AFTER eating, not during. Never show hands grabbing food directly—use utensils elegantly.",
+      "aspect_ratio": "9:16"
+    },
+    {
+      "id": "luxury",
+      "name": "👑 프리미엄 (Premium)",
+      "desc": "차분한 템포로 고급스러운 이미지를 강조하는 영상",
+      "visual_keywords": "Luxurious, Cinematic Lighting, Slow Motion 120fps, Gold and Black tones, Fine dining atmosphere, bokeh background, crystal-clear glass reflections, silk-like sauce drizzle, precise plating, candlelight warmth, rich mahogany surfaces",
+      "camera_setup": "Slow smooth dolly push-in, stabilized gimbal glide, 85mm portrait lens f/1.4 shallow depth of field, anamorphic lens flare, steady crane descent, macro close-up for food texture detail, rack focus from foreground garnish to background ambiance",
+      "negative_prompt": "cheap plastic plates, messy table, noise, film grain, ugly lighting, fluorescent light, text overlay, subtitles, distorted hands, fingers merging with food, unnatural jaw movements, food stuck on face, extra limbs, warped cutlery, cross-eyed expression",
+      "food_focus_rule": "Emphasize the ARTISTRY of plating and the GLOW of ambient lighting on the food surface. Human subjects should appear composed and elegant—show gentle smiles and appreciative nods, never chewing. Use extreme macro shots to highlight sauce viscosity, steam wisps, and garnish details.",
+      "aspect_ratio": "9:16"
+    },
+    {
+      "id": "emotional",
+      "name": "☕ 무드 (Mood)",
+      "desc": "잔잔한 분위기와 스토리 중심으로 감성을 담은 영상",
+      "visual_keywords": "Cozy, Warm Tone, Instagram Aesthetic, Soft golden-hour sunlight, emotional atmosphere, gentle steam curling upward, rustic wooden textures, linen napkins, handcrafted ceramic bowls, rain-on-window ambiance, café lo-fi mood",
+      "camera_setup": "Static tripod shot with gentle breathing motion, slow focus pull 50mm f/1.8, soft vignette framing, time-lapse of steam dissipating, handheld intimate close-up, natural window-light side lighting, subtle parallax shift",
+      "negative_prompt": "harsh fluorescent lights, neon colors, distorted faces, text overlay, subtitles, aggressive camera shake, chaotic editing, distorted hands grabbing food, unnatural finger positions, food flying, mouth wide open while eating, extra fingers, warped spoons",
+      "food_focus_rule": "Focus on the WARMTH and COZINESS of the scene. Show hands gently cradling a warm bowl or cup—never grabbing food. Capture the steam, the soft clink of ceramics, and the peaceful expression of someone savoring a moment. Prioritize atmosphere over action.",
+      "aspect_ratio": "9:16"
+    }
+  ]
+}
