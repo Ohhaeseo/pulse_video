@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form, HTTPException, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 # from services.veo_service import VeoService # [DISABLED]
-from services.veo_service import VeoService # [DISABLED]
+# from services.veo_service import VeoService # [DISABLED]
 # from services.luma_service import LumaService # [DISABLED]
 from services.vertex_video_service import VertexVideoService # [ENABLED]
 from pydantic import BaseModel
@@ -108,8 +108,10 @@ async def generate_promotion_video(
         image_path = f"static/uploads/{image.filename}"
         with open(image_path, "wb") as buffer:
             shutil.copyfileobj(image.file, buffer)
+        print("\n✅ [Promotion API] 이미지 저장 완료.")
         
         # 2. LLM을 사용하여 영상 생성용 Payload 생성 (Prompt Engineering)
+        print("🔄 [Promotion API] LLM 프롬프트 최적화 시작...")
         raw_context = {
             "metadata": {
                 "vibe_id": style, # energy, premium, mood
@@ -125,19 +127,26 @@ async def generate_promotion_video(
 
         # LLM 호출 -> 최적화된 Veo Payload (Title, Hashtags 포함)
         optimized_payload = await llm_service.optimize_payload(raw_context, image_path)
+        print("✅ [Promotion API] LLM 프롬프트 최적화 완료.")
         
         # 3. 영상 생성 요청 (Vertex AI)
+        print("🚀 [Promotion API] Vertex AI (Veo) 영상 생성 요청 전송 중...")
         # VertexVideoService는 metadata, timeline 등을 사용
-        video_url = await vertex_video_service.generate_video(optimized_payload, image_path)
-        # video_url = await luma_service.generate_video(optimized_payload, image_path)
-
+        generation_result = await vertex_video_service.generate_video(optimized_payload, image_path)
+        video_url = generation_result.get("video_url")
+        audio_url = generation_result.get("audio_url")
+        
         # 4. 메타데이터 추출
+        print("🎉 [Promotion API] 영상 및 오디오 생성 성공! 결과를 프론트엔드로 반환합니다.")
         video_title = optimized_payload.get("title", f"{target}을 위한 {concept}")
         hashtags = optimized_payload.get("hashtags", ["#맛집", "#추천"])
+        audio_script = optimized_payload.get("audio_script", "")
 
         return {
             "status": "success", 
             "video_url": video_url,
+            "audio_url": audio_url,
+            "audio_script": audio_script,
             "video_title": video_title,
             "hashtags": hashtags
         }
