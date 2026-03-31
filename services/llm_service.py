@@ -1,3 +1,8 @@
+"""
+llm_service.py
+DSPy 프레임워크와 Gemini 모델을 활용하여 사용자의 문장이나 키워드를
+Vertex AI Veo 공식 프롬프트 양식에 맞춰 구체적이고 상업적인 프롬프트로 최적화(Prompt Engineering)하는 서비스입니다.
+"""
 import os
 import json
 import logging
@@ -47,13 +52,14 @@ class VeoAdPromptSignature(dspy.Signature):
     visual_keywords = dspy.InputField(desc="Key visual ingredients and lighting styles that must permeate the prompt.")
     
     # Constraints
-    food_focus_rule = dspy.InputField(desc="Rule defining how to depict the food vs. the human without artificial weirdness.")
+    food_focus_rule = dspy.InputField(desc="RULE 6: MANDATORY HUMAN REACTION. You MUST dedicate the final scene to a close-up shot of an ordinary, relatable local Korean adult (e.g., in their 20s-30s) showing immense surprise and amazement at the food. They MUST NOT eat or chew. CRITICAL SAFETY: DO NOT describe the person as 'attractive', 'sexy', or having an 'open mouth/gasp'. Only describe 'wide eyes' and 'delight' to bypass strict API safety filters. This human reaction scene is absolutely REQUIRED.")
     negative_constraints = dspy.InputField(desc="Strict list of visual anomalies to explicitly avoid generating.")
     image_visual_context = dspy.InputField(desc="Detailed visual analysis extracted from the user's uploaded photo (use colors, textures, lighting).")
+    reference_style_blueprint = dspy.InputField(desc="The extracted exact cinematic directing blueprint from the reference viral video. MUST be applied to the target food.")
     
     # Output Formulation
     rationale = dspy.OutputField(desc="Strategic Plan: (1) How does the Hook work? (2) How are the official Veo 'Subject+Motion+Environment+Angle+Lens' applied? (3) How are negative constraints enforced?")
-    final_veo_json = dspy.OutputField(desc="A valid JSON string matching the Master Template: title(Korean), hashtags(Korean array), metadata, key_elements(English array), negative_prompts(English array), timeline(Array of scenes incorporating the VEO formula).")
+    final_veo_json = dspy.OutputField(desc="A valid JSON string matching the Master Template: title(A catchy and creative Korean SNS title), hashtags(Array of 3-5 trendy Korean SNS hashtags), metadata, key_elements(English array), negative_prompts(English array), timeline(Array of scenes incorporating the VEO formula).")
     audio_script = dspy.OutputField(desc="A punchy, 1-2 sentence Korean voiceover/exclamation script tailored to the target_persona and conveying the emotional vibe. e.g. '와, 이 국물 미쳤다!'")
 class LLMService:
     def __init__(self):
@@ -70,9 +76,6 @@ class LLMService:
         # 기존 클라이언트 속성 (멀티모달 이미지 분석)
         self.raw_client = genai.Client(api_key=self.api_key)
         
-        # 최적화 모듈 (광고 특화 서명 사용)
-        self.optimizer = dspy.ChainOfThought(VeoAdPromptSignature)
-
         # 2. 템플릿 로드
         self.templates = {}
         try:
@@ -83,6 +86,50 @@ class LLMService:
             logger.info(f"✅ Loaded {len(self.templates)} templates.")
         except Exception as e:
             logger.error(f"⚠️ Failed to load templates.json: {e}")
+
+        # 3. DSPy Reference Video Blueprint 로드 및 퓨샷(Few-Shot) 컴파일
+        self.reference_examples = []
+        try:
+            from dspy.teleprompt import LabeledFewShot
+            with open("reference_blueprints.json", "r", encoding="utf-8") as rf:
+                rb_data = json.load(rf)
+                for rb in rb_data.get("reference_videos", []):
+                    ex = dspy.Example(
+                        target_persona=rb.get("target_persona", ""),
+                        concept=rb.get("concept", ""),
+                        target_vibe=rb.get("target_vibe", ""),
+                        sns_marketing_hook=rb.get("sns_marketing_hook", ""),
+                        camera_angle=rb.get("camera_angle", ""),
+                        lens_optical_effects=rb.get("lens_optical_effects", ""),
+                        visual_keywords=rb.get("visual_keywords", ""),
+                        food_focus_rule=rb.get("food_focus_rule", ""),
+                        negative_constraints=rb.get("negative_constraints", ""),
+                        image_visual_context=rb.get("image_visual_context", ""),
+                        reference_style_blueprint=rb.get("reference_style_blueprint", ""),
+                        rationale=rb.get("rationale", ""),
+                        final_veo_json=rb.get("final_veo_json", ""),
+                        audio_script=rb.get("audio_script", "")
+                    ).with_inputs(
+                        "target_persona", "concept", "target_vibe", "sns_marketing_hook",
+                        "camera_angle", "lens_optical_effects", "visual_keywords",
+                        "food_focus_rule", "negative_constraints", "image_visual_context",
+                        "reference_style_blueprint"
+                    )
+                    self.reference_examples.append(ex)
+            logger.info(f"✅ Loaded {len(self.reference_examples)} DSPy Reference Video Blueprints.")
+        except Exception as e:
+            logger.error(f"⚠️ Failed to load reference_blueprints.json: {e}")
+
+        # 최적화 모듈 (광고 특화 서명에 퓨샷 동적 주입)
+        if self.reference_examples:
+            logger.info("🧠 Compiling Reference Video Style Transfer (Few-Shot)...")
+            few_shot_optimizer = LabeledFewShot(k=min(2, len(self.reference_examples)))
+            self.optimizer = few_shot_optimizer.compile(
+                student=dspy.ChainOfThought(VeoAdPromptSignature),
+                trainset=self.reference_examples
+            )
+        else:
+            self.optimizer = dspy.ChainOfThought(VeoAdPromptSignature)
 
     async def _extract_image_context(self, image_path: str) -> str:
         """Vision Pre-processing using Gemini 2.5 Flash Vision."""
@@ -146,8 +193,20 @@ Your description will be used as the absolute visual truth for an AI video comme
             }
             target_vibe_label = vibe_label_map.get(vibe_id, "에너지")
 
+            # Reference Video Retrieval Match (의사-KNN)
+            # 사용자의 target_vibe와 매칭되는 블루프린트를 1차적으로 탐색, 없으면 첫 번째 스키마 사용
+            matched_blueprint = "[No Reference Blueprint]"
+            if hasattr(self, 'reference_examples') and self.reference_examples:
+                for rb in self.reference_examples:
+                    if rb.target_vibe and (target_vibe_label[:3] in rb.target_vibe):
+                        matched_blueprint = rb.reference_style_blueprint
+                        break
+                if matched_blueprint == "[No Reference Blueprint]":
+                    matched_blueprint = self.reference_examples[0].reference_style_blueprint
+            
             # Execute DSPy optimization
             logger.info(f"💡 Applying VEO Camera: {t_angle} | {t_lens}")
+            logger.info(f"🎬 Style Blueprint Mimic: {matched_blueprint[:80]}...")
             logger.info(f"📢 Injecting SNS Hook: {t_hook[:100]}...")
 
             prediction = self.optimizer(
@@ -160,7 +219,8 @@ Your description will be used as the absolute visual truth for an AI video comme
                 visual_keywords=t_keywords,
                 food_focus_rule=t_food_rule,
                 negative_constraints=t_negative,
-                image_visual_context=image_context
+                image_visual_context=image_context,
+                reference_style_blueprint=matched_blueprint
             )
             
             logger.info(f"💡 DSPy Commercial Rationale:\n{prediction.rationale}")
@@ -169,6 +229,12 @@ Your description will be used as the absolute visual truth for an AI video comme
                 # Cleanup and loading
                 clean_text = prediction.final_veo_json.replace("```json", "").replace("```", "").strip()
                 optimized_json = json.loads(clean_text)
+                
+                # DSPy OutputField로 분리된 오디오 스크립트를 수동으로 JSON에 결합하여 main.py가 추출할 수 있게 함
+                audio_script_val = getattr(prediction, "audio_script", "")
+                if audio_script_val:
+                    optimized_json["audio_script"] = str(audio_script_val)
+                
                 return optimized_json
             except json.JSONDecodeError as decode_err:
                 logger.error(f"⚠️ JSON Parse Error: {decode_err}\nRaw output: {prediction.final_veo_json}")

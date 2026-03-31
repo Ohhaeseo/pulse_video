@@ -1,3 +1,8 @@
+"""
+tts_service.py
+Google Cloud Text-to-Speech API를 호출하여, 
+광고 영상에 들어갈 짧은 내레이션(오디오 스크립트)을 mp3 파일로 합성하는 서비스입니다.
+"""
 import os
 import logging
 from google.cloud import texttospeech

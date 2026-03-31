@@ -8,8 +8,8 @@
       "camera_angle": "Extreme Close-up penetrating the food, Dynamic P.O.V panning, Fast handheld shake",
       "lens_optical_effects": "Wide-angle macro lens, Shallow depth of field focusing strictly on the most appetizing part, Fast Shutter Speed, Dolly Zoom for visceral impact",
       "sns_marketing_hook": "0-2s SCROLL STOPPER: Start with a hyper-realistic, overwhelmingly close macro shot of the food's best feature (boiling, sizzling, dripping). It must feel so real the viewer can smell it. Relatable over cinematic perfection.",
-      "negative_prompt": "humans, people, faces, hands, fingers, eating, utensils, artificial studio lighting, overly clean, fake, plastic, text overlay, subtitles, watermark",
-      "food_focus_rule": "PRODUCT ONLY. ABSOLUTELY NO HUMANS IN THE SCENE. Focus 100% on the visceral, raw appeal of the food (boiling, sizzling, steam). Prioritize making it look insanely delicious in a relatable setting over looking like a high-end CF.",
+      "negative_prompt": "eating, chewing, artificial studio lighting, overly clean, fake, plastic, text overlay, subtitles, watermark",
+      "food_focus_rule": "PRODUCT + KOREAN REACTION. Focus on the visceral, raw appeal of the food. If a human is shown, they MUST be a typical local Korean adult showing an amazed reaction or pointing at the food. NO EATING OR CHEWING.",
       "aspect_ratio": "9:16"
     },
     {
@@ -20,8 +20,8 @@
       "camera_angle": "Medium close-up shifting to Extreme Close-up, Slow graceful pan, Eye-level aesthetic angle",
       "lens_optical_effects": "Telephoto lens (85mm), Extreme Bokeh, Soft cinematic glow but tack-sharp focus on the food texture, Slow Motion (120fps)",
       "sns_marketing_hook": "HIGH-END PRESTIGE AD: Start with a hypnotic, slow-motion macro shot revealing the intricate texture of the dish. It should feel luxurious but ultimately make the viewer intensely crave the food.",
-      "negative_prompt": "humans, people, faces, hands, fingers, eating, utensils, cheap plastic, messy background, bright fluorescent lights, text overlay, subtitles",
-      "food_focus_rule": "PRODUCT ONLY. ABSOLUTELY NO HUMANS IN THE SCENE. Emphasize the exquisite texture and high-end aura of the food without losing the raw 'appetizing' factor. No human interaction.",
+      "negative_prompt": "eating, chewing, cheap plastic, messy background, bright fluorescent lights, text overlay, subtitles",
+      "food_focus_rule": "PRODUCT + KOREAN REACTION. Emphasize the exquisite texture and high-end aura of the food. If a human is shown, they MUST be a typical local Korean adult showing an amazed reaction or pointing at the food. NO EATING.",
       "aspect_ratio": "9:16"
     },
     {
@@ -32,8 +32,8 @@
       "camera_angle": "Intimate close-up, Dutch angle for artistic everyday feel, Subtle slow zoom-in",
       "lens_optical_effects": "Standard lens (50mm), Soft organic focus, Vintage film warmth, Gentle light bleed, Time-lapse of steam or melting",
       "sns_marketing_hook": "AUTHENTIC STORYTELLING: Focus heavily on the sensory details that evoke comfort and craving (warm steam, melting textures, golden sunlight). It must feel like a deeply relatable, comforting moment.",
-      "negative_prompt": "humans, people, faces, hands, fingers, eating, utensils, harsh studio lights, overly staged, text overlay, subtitles, aggressive camera movements",
-      "food_focus_rule": "PRODUCT ONLY. ABSOLUTELY NO HUMANS IN THE SCENE. Focus on the emotional warmth and pure craving evoked by the food's texture and ambient lighting. Prioritize relatable everyday aesthetics over generic cinematic gloss. No hands or people.",
+      "negative_prompt": "eating, chewing, harsh studio lights, overly staged, text overlay, subtitles, aggressive camera movements",
+      "food_focus_rule": "PRODUCT + KOREAN REACTION. Focus on the emotional warmth and pure craving evoked by the food's texture. If a human is shown, they MUST be a typical local Korean adult showing an amazed reaction or pointing at the food. NO EATING.",
       "aspect_ratio": "9:16"
     }
   ]

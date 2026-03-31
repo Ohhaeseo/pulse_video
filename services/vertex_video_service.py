@@ -1,3 +1,8 @@
+"""
+vertex_video_service.py
+Vertex AI의 Veo 모델(veo-2.0-generate-001)을 호출하여 실제 비디오를 생성하는 핵심 서비스입니다.
+생성된 영상을 FFmpeg를 사용하여 9:16 비율(쇼츠/릴스용)로 크롭하는 후처리 로직도 포함되어 있습니다.
+"""
 import os
 import time
 import logging
@@ -5,7 +10,7 @@ import json
 from typing import Optional, Dict, Any
 from google import genai
 from google.genai import types
-from google.genai.types import GenerateVideosConfig, Part
+from google.genai.types import GenerateVideosConfig, Part, VideoGenerationReferenceImage
 from services.llm_service import LLMService
 from services.tts_service import TTSService
 
@@ -68,6 +73,9 @@ class VertexVideoService:
                 elif isinstance(scene, str):
                     timeline_items.append(scene)
             
+            if not timeline_items:
+                timeline_items = [str(k) for k in optimized_payload.get("key_elements", []) if k]
+                
             timeline_desc = " ".join(timeline_items)
             
             negatives_raw = optimized_payload.get("negative_prompts", [])
@@ -84,7 +92,7 @@ class VertexVideoService:
                 f"A high-end TikTok/Instagram commercial advertisement (9:16 vertical). "
                 f"{timeline_desc} "
                 f"Setting: {location}. Lighting & Style: {base_style}. "
-                f"Breathtaking cinematography, highly appetizing food porn, ultra-premium commercial quality."
+                f"Breathtaking cinematography, highly appetizing visuals, ultra-premium commercial quality."
                 f"{negative_str}"
             )
             
@@ -101,23 +109,31 @@ class VertexVideoService:
                 try:
                     with open(image_path, "rb") as img_file:
                         image_bytes = img_file.read()
-                    reference_image = types.Image.from_bytes(image_bytes)
+                    reference_image = types.Image(imageBytes=image_bytes, mimeType="image/jpeg")
                     print("✅ [Vertex AI Service] Image successfully loaded for Veo Video Prompt Payload")
                     logger.info("✅ Image successfully loaded for Veo Video Prompt Payload")
                 except Exception as img_err:
                     print(f"⚠️ [Vertex AI Service] Failed to load Reference Image for Veo: {img_err}")
                     logger.error(f"⚠️ Failed to load Reference Image for Veo: {img_err}")
             
+            config_params = {
+                "aspect_ratio": "16:9",
+                "person_generation": "dont_allow"
+            }
+            
+            if reference_image:
+                config_params["reference_images"] = [
+                    VideoGenerationReferenceImage(
+                        image=reference_image,
+                        referenceType="ASSET"
+                    )
+                ]
+            
             kwargs = {
                 "model": self.model_name,
                 "prompt": final_prompt,
-                "config": GenerateVideosConfig(
-                    aspect_ratio="9:16",
-                    person_generation="dont_allow",
-                )
+                "config": GenerateVideosConfig(**config_params)
             }
-            if reference_image:
-                kwargs["image"] = reference_image
 
             print("⏳ [Vertex AI Service] Veo Verification Operation Started. Please wait...")
             operation = self.client.models.generate_videos(**kwargs)
@@ -141,10 +157,35 @@ class VertexVideoService:
                     local_path = os.path.join("static", "videos", local_filename)
                     
                     try:
+                        import subprocess
                         video_result.video.save(local_path)
+                        
+                        logger.info(f"✂️ Cropping video to 9:16 aspect ratio via FFmpeg...")
+                        local_filename_cropped = f"video_9x16_{int(time.time())}.mp4"
+                        local_path_cropped = os.path.join("static", "videos", local_filename_cropped)
+                        
+                        subprocess.run([
+                            "ffmpeg", "-y", "-i", local_path, 
+                            "-vf", "crop=ih*9/16:ih", 
+                            "-c:a", "copy", local_path_cropped
+                        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        
+                        video_uri = f"http://localhost:8000/static/videos/{local_filename_cropped}"
+                        print(f"💾 [Vertex AI Service] Video successfully cropped and saved locally: {video_uri}")
+                        logger.info(f"💾 Video cropped and saved locally: {video_uri}")
+                        
+                        # Cleanup the original 16:9 file
+                        try:
+                            os.remove(local_path)
+                        except:
+                            pass
+                            
+                    except subprocess.CalledProcessError as e:
+                        logger.error(f"⚠️ FFmpeg crop failed: {e}. Falling back to 16:9 raw.")
                         video_uri = f"http://localhost:8000/static/videos/{local_filename}"
-                        print(f"💾 [Vertex AI Service] Video saved locally: {video_uri}")
-                        logger.info(f"💾 Video saved locally: {video_uri}")
+                    except Exception as e:
+                        logger.error(f"⚠️ FFmpeg execution error (missing ffmpeg?): {e}. Falling back to 16:9 raw.")
+                        video_uri = f"http://localhost:8000/static/videos/{local_filename}"
                     except AttributeError:
                         print("⚠️ [Vertex AI Service] Could not save video object directly. Returning mock.")
                         logger.warning("⚠️ Could not save video object directly. Returning mock.")

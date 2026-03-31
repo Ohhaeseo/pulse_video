@@ -1,9 +1,12 @@
+"""
+main.py
+FastAPI 메인 서버 애플리케이션입니다. 
+프론트엔드와 연동하여 LLM 프롬프트 최적화 및 Vertex AI (Veo 2.0) 영상 생성 API 엔드포인트를 제공합니다.
+Luma AI 관련 코드는 제거되고 Vertex AI로 완전히 전환되었습니다.
+"""
 from fastapi import FastAPI, Form, HTTPException, UploadFile, File
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-# from services.veo_service import VeoService # [DISABLED]
-# from services.veo_service import VeoService # [DISABLED]
-# from services.luma_service import LumaService # [DISABLED]
 from services.vertex_video_service import VertexVideoService # [ENABLED]
 from pydantic import BaseModel
 from typing import List, Optional
@@ -21,8 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 # ...
-# veo_service = VeoService()
-# luma_service = LumaService()
 vertex_video_service = VertexVideoService()
 
 # 프론트엔드 정적 파일 연결
@@ -76,9 +77,7 @@ async def generate_endpoint(
                 shutil.copyfileobj(image.file, buffer)
             print(f"🖼️ [이미지 업로드] 저장 경로: {image_path}")
 
-        # 3. Call Luma Service (Previously Vertex/Veo)
-        # video_url = await veo_service.generate_video(payload_dict, image_path)
-        # video_url = await luma_service.generate_video(payload_dict, image_path)
+        # 3. Call Vertex AI Video Service
         video_url = await vertex_video_service.generate_video(payload_dict, image_path)
         
         return {"status": "success", "video_url": video_url}
