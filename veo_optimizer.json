@@ -1,0 +1,182 @@
+{
+  "generate.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "target_persona": "A focused customer",
+        "concept": "Romantic River Dining",
+        "target_vibe": "프리미엄 (CF 광고 스타일, 고급 시네마틱 렌즈 워크)",
+        "sns_marketing_hook": "The video immediately opens with a stunning night view of the Han River from a restaurant with a unique starry ceiling, creating an instant romantic and luxurious atmosphere.",
+        "camera_angle": "Eye-level wide shot, Medium shot, Static wide shot, Subtle horizontal pan",
+        "lens_optical_effects": "Standard wide-angle, Medium telephoto, Cinematic bokeh, Natural light",
+        "visual_keywords": "Romantic, Luxurious, Cityscape, Night view, Ambiance",
+        "food_focus_rule": "Focus heavily on texture and lighting. NO HUMANS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Placeholder for dynamic user image",
+        "reference_style_blueprint": "The camera pacing is rapid, featuring quick cuts between various restaurant interiors and their Han River views, maintaining a dynamic and engaging rhythm. Lighting is predominantly dim and romantic inside, often contrasted with the vibrant city lights outside, creating a cozy yet sophisticated atmosphere. Camera movement is a blend of stable wide shots, gentle pans across the dining areas, and occasional subtle tracking, all designed to smoothly showcase the diverse settings and their scenic backdrops.",
+        "rationale": "Mimicking the uploaded reference video precisely.",
+        "final_veo_json": "{}"
+      },
+      {
+        "target_persona": "A happy customer",
+        "concept": "Sizzling meat on a grill",
+        "target_vibe": "에너지 (SNS Viral 릴스/쇼츠 스타일, 빠른 템포 훅)",
+        "sns_marketing_hook": "Explosive sizzle sound and extreme close-up of oil bubbling.",
+        "camera_angle": "Extreme Close-Up, Dutch angle, Whip pan",
+        "lens_optical_effects": "Macro lens, shallow depth of field",
+        "visual_keywords": "Vibrant, Commercial Quality, intense smoke",
+        "food_focus_rule": "Focus strictly on the texture of the crisping meat and boiling oil. NO HANDS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Thick cuts of raw pork belly on a black iron grill, red meat with white fat.",
+        "reference_style_blueprint": "[REFERENCE CLIP ANALYSIS] The video starts with a violent macro crash-zoom onto the grill. Lighting is contrast-heavy with neon undertones. The pacing is frantic, using a whip pan to transition between raw and cooked states, emphasizing intense kinetic energy and heat.",
+        "rationale": "To mimic the viral K-BBQ reference, I am applying a violent crash-zoom and whip pans to the user's meat image. I am matching the neon-heavy, high-contrast lighting from the blueprint while ignoring human elements to prevent Veo distortion.",
+        "final_veo_json": "{\n  \"title\": \"🔥육즙 팡팡! 극한의 시즐링🔥\",\n  \"hashtags\": [\"#고기맛집\", \"#육즙가득\", \"#먹스타그램\"],\n  \"metadata\": {\n    \"prompt_name\": \"PULSE_Gen_KBBQ\",\n    \"base_style\": \"Vertical 9:16, Portrait Mode, Photorealistic, 4K, Fast-paced, Vibrant Colors\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"8-10 seconds\",\n    \"location\": \"A bustling Korean BBQ restaurant, bright neon signs in background\",\n    \"camera_setup\": \"Vertical framing. Dynamic crash-zoom, Fast whip pan, Macro lens on sizzling oil\"\n  },\n  \"key_elements\": [\n    \"Sizzling pork belly\",\n    \"No humans\",\n    \"High visual fidelity\"\n  ],\n  \"negative_prompts\": [\n    \"text\",\n    \"subtitles\",\n    \"humans\",\n    \"faces\",\n    \"hands\",\n    \"horizontal\"\n  ],\n  \"timeline\": [\n    {\n      \"time\": \"0s - 2s\",\n      \"action\": \"Extreme Macro crash-zoom onto the pork belly hitting the hot grill, intense smoke and sizzling oil droplets flying.\"\n    },\n    {\n      \"time\": \"2s - 4s\",\n      \"action\": \"Fast whip pan instantly changing the meat to a perfectly golden brown crispy state.\"\n    },\n    {\n      \"time\": \"4s - 8s\",\n      \"action\": \"Slow motion tilt up showing the glorious steam rising against a dark, moody neon background.\"\n    }\n  ]\n}"
+      },
+      {
+        "target_persona": "A focused customer",
+        "concept": "Introvert Cafe Tour",
+        "target_vibe": "무드 (인스타그램 감성 스토리, 따뜻한 렌즈 플레어)",
+        "sns_marketing_hook": "Cozy cafe interior with a record player and coffee brewing setup, immediately inviting a relaxed and contemplative mood.",
+        "camera_angle": "Medium shot, Wide shot, Close-up, Eye-level, Slightly high angle, Low angle tracking",
+        "lens_optical_effects": "Cinematic bokeh, Warm color grading, Natural light, Soft focus",
+        "visual_keywords": "Cozy, Serene, Intimate, Aesthetic, Warm",
+        "food_focus_rule": "Focus heavily on texture and lighting. NO HUMANS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Placeholder for dynamic user image",
+        "reference_style_blueprint": "The camera pacing is deliberate and unhurried, allowing each cafe's ambiance to settle with the viewer through sustained shots. Lighting is consistently warm and soft, leveraging natural window light and ambient indoor fixtures to cultivate a deeply cozy and inviting atmosphere. Camera movement is minimal, primarily consisting of static shots or gentle, slow pans, with one distinct low-angle tracking shot down a staircase, emphasizing the tranquil beauty of each space.",
+        "rationale": "Mimicking the uploaded reference video precisely.",
+        "final_veo_json": "{}"
+      },
+      {
+        "target_persona": "A focused customer",
+        "concept": "Seoul Dining Experience",
+        "target_vibe": "무드 (인스타그램 감성 스토리, 따뜻한 렌즈 플레어)",
+        "sns_marketing_hook": "Close-up of delicious pasta being served, instantly highlighting the culinary experience.",
+        "camera_angle": "Close-up, Medium shot, Wide shot, Tracking shot, Overhead shot",
+        "lens_optical_effects": "Cinematic bokeh, warm ambient lighting, soft focus",
+        "visual_keywords": "Luxurious, Romantic, Cozy, Warm, Intimate",
+        "food_focus_rule": "Focus heavily on texture and lighting. NO HUMANS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Placeholder for dynamic user image",
+        "reference_style_blueprint": "The video employs a dynamic, fast-paced editing style with quick cuts between various scenes, maintaining viewer engagement. Predominantly warm, dim ambient lighting creates an intimate and luxurious atmosphere, often highlighting specific elements with soft glows. Camera movement varies from steady close-ups on food and drinks to smooth tracking shots of the interior and establishing wide shots, effectively showcasing both details and the overall ambiance.",
+        "rationale": "Mimicking the uploaded reference video precisely.",
+        "final_veo_json": "{}"
+      },
+      {
+        "target_persona": "A focused customer",
+        "concept": "Korean Food Preparation",
+        "target_vibe": "에너지 (SNS Viral 릴스/쇼츠 스타일, 빠른 템포 훅)",
+        "sns_marketing_hook": "Extreme close-up of creamy white sauce being squeezed onto a dark, textured rice ball, creating a visually satisfying and intriguing moment.",
+        "camera_angle": "Extreme Close-up, High angle, Medium close-up, Static overhead shots",
+        "lens_optical_effects": "Macro, Shallow depth of field, Bright natural lighting",
+        "visual_keywords": "Appetizing, Vibrant, Close-up, Dynamic, Satisfying",
+        "food_focus_rule": "Focus heavily on texture and lighting. NO HUMANS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Placeholder for dynamic user image",
+        "reference_style_blueprint": "The camera pacing is extremely fast, characterized by rapid cuts between different stages of food preparation and consumption, maintaining high energy. Lighting is consistently bright and even, emphasizing the vibrant colors and textures of the dishes without harsh shadows or dramatic effects. Camera movement is minimal, primarily consisting of static overhead or close-up shots, with the dynamism generated by the quick edits and the action within the frame, such as pouring, mixing, and dipping.",
+        "rationale": "Mimicking the uploaded reference video precisely.",
+        "final_veo_json": "{}"
+      },
+      {
+        "target_persona": "High-end café hopper",
+        "concept": "Elegant dessert plating",
+        "target_vibe": "프리미엄 (CF 광고 스타일, 고급 시네마틱 렌즈 워크)",
+        "sns_marketing_hook": "Slow and graceful reveal of the dessert with soft rim lighting.",
+        "camera_angle": "Low angle, tracking shot, slow pan",
+        "lens_optical_effects": "85mm telephoto, cinematic bokeh, soft focus bloom",
+        "visual_keywords": "Luxurious, Cinematic Lighting, Slow Motion, Elegant",
+        "food_focus_rule": "Focus entirely on the glossy texture and elegant shape of the dessert. NO HUMANS.",
+        "negative_constraints": "messy, chaotic, fast movement, humans, hands",
+        "image_visual_context": "A sleek, glossy chocolate mousse cake on a pristine white ceramic plate with gold flakes.",
+        "reference_style_blueprint": "[REFERENCE CLIP ANALYSIS] The video uses ultra-smooth, slow-motion robotic camera arms. It starts slightly out of focus and slowly pulls back into sharp focus (rack focus). Lighting is soft, warm, and highly directional, creating a premium commercial feel without any sudden movements.",
+        "rationale": "I am adopting the slow-motion rack focus and warm directional lighting from the luxury reference blueprint. The pacing will be significantly slowed down to give a premium CF feel, focusing on the gloss of the chocolate.",
+        "final_veo_json": "{\n  \"title\": \"✨달콤함의 절정, 프리미엄 디저트✨\",\n  \"hashtags\": [\"#디저트맛집\", \"#프리미엄디저트\", \"#카페추천\"],\n  \"metadata\": {\n    \"prompt_name\": \"PULSE_Gen_Dessert\",\n    \"base_style\": \"Vertical 9:16, Portrait Mode, 8K, Masterpiece, Luxurious, Cinematic Lighting, Slow Motion\",\n    \"aspect_ratio\": \"9:16\",\n    \"duration\": \"8-10 seconds\",\n    \"location\": \"A high-end boutique cafe counter with soft rim lighting\",\n    \"camera_setup\": \"Vertical framing. Slow smooth pan, Stabilized gimbal shot, Rack focus\"\n  },\n  \"key_elements\": [\n    \"Glossy chocolate mousse\",\n    \"No humans\",\n    \"Cinematic bokeh\"\n  ],\n  \"negative_prompts\": [\n    \"fast motion\",\n    \"shaky cam\",\n    \"humans\",\n    \"hands\"\n  ],\n  \"timeline\": [\n    {\n      \"time\": \"0s - 3s\",\n      \"action\": \"Starts slightly out of focus, then an ultra-smooth slow-motion rack focus perfectly reveals the glossy chocolate mousse cake.\"\n    },\n    {\n      \"time\": \"3s - 8s\",\n      \"action\": \"A slow robotic camera tracks gracefully around the plate, capturing the gleam of the gold flakes under warm, directional light.\"\n    }\n  ]\n}"
+      },
+      {
+        "target_persona": "A focused customer",
+        "concept": "Christmas restaurant tour",
+        "target_vibe": "프리미엄 (CF 광고 스타일, 고급 시네마틱 렌즈 워크)",
+        "sns_marketing_hook": "A wide shot of a luxurious restaurant with a starry ceiling and live jazz music immediately sets a high-end, romantic atmosphere.",
+        "camera_angle": "Wide shot, Medium shot, Close-up, Static shot, Subtle pan, Subtle tilt",
+        "lens_optical_effects": "Standard focal length, Shallow depth of field, Cinematic bokeh, Natural lighting, Artificial mood lighting",
+        "visual_keywords": "Luxurious, Romantic, Elegant, Cozy, Appetizing",
+        "food_focus_rule": "Focus heavily on texture and lighting. NO HUMANS.",
+        "negative_constraints": "blurry, text overlay, humans, hands, faces",
+        "image_visual_context": "Placeholder for dynamic user image",
+        "reference_style_blueprint": "The camera pacing is rapid, featuring quick cuts between 8 distinct restaurant and bar locations, each segment lasting only a few seconds to maintain high engagement typical of SNS reels. Lighting is consistently warm and ambient, often dim to create a romantic and intimate atmosphere, with specific spotlights on food and drinks to enhance their appeal. Camera movement is minimal, primarily utilizing static shots or very slow, smooth pans and tilts to showcase the venue's ambiance and details without distracting from the luxurious settings.",
+        "rationale": "Mimicking the uploaded reference video precisely.",
+        "final_veo_json": "{}"
+      }
+    ],
+    "signature": {
+      "instructions": "You are an elite SNS Advertising Director and Google Vertex AI VEO 2.0 Prompt Engineer.\nYour sole goal is to generate HIGH-CONVERTING, COMMERCIAL-GRADE video prompts to sell a food menu to a specific `target_persona`.\n\n=== VEO 2.0 OFFICIAL PROMPT FORMULA ===\nEvery scene description MUST explicitly combine:\n[Subject/대상] + [Motion/동작] + [Environment/환경] + [Camera Angle/카메라 앵글] + [Lens Effect/렌즈 및 광학 효과]\n\n=== CRITICAL ADVERTISING RULES ===\n1. THE 2-SECOND HOOK: The first scene must be visually explosive (Extreme Close-Up, macro shot of steam, sizzling) to stop SNS scrolling. Apply the `sns_marketing_hook` directive.\n2. VISUAL COPYWRITING: Don't just show food; make it look incredibly appetizing using the `visual_keywords`.\n3. STRICT VEO CAMERA DIRECTING: You must explicitly include the `camera_angle` and `lens_optical_effects` exactly as provided in the prompt text.\n4. PREVENT AI ARTIFACTS: Explicitly enforce the `negative_constraints` (e.g. absolutely NO humans, hands, or faces allowed) to avoid rendering issues.\n5. ABSOLUTELY NO HUMANS: You must strictly obey the `food_focus_rule`. Never generate humans, hands, or utensils. Focus 100% of the cinematic motion on the product itself (steam, lighting, dynamic movement).\n6. VISION SYNC: Match the video exactly to the user's uploaded photo using the `image_visual_context` (colors, plating, lighting).\n7. 8-SECOND IMPACT: The video generated by Veo is strictly 8 seconds long. Do not write a slow, static, or boring scene. Force extreme dynamic motion (e.g., 'crashing', 'bursting', 'whip pan', 'sizzling') to create hyper-cinematic commercial tension.\n8. PERSONA OVER QUALITY: Prioritize making the food look hyper-realistic, visceral, and relatable to the `target_persona` over making it look like a generic 'luxurious' CF. Provide a visceral context.",
+      "fields": [
+        {
+          "prefix": "Target Persona:",
+          "description": "The target customer persona (Korean). Use this STRICTLY to determine the mood, lighting, and environmental vibe. DO NOT include humans."
+        },
+        {
+          "prefix": "Concept:",
+          "description": "The core food menu/concept (Korean). Translate into mouth-watering, appetizing visual English."
+        },
+        {
+          "prefix": "Target Vibe:",
+          "description": "The desired advertising style: 에너지 (fast, viral), 프리미엄 (slow, luxury CF), or 무드 (emotional storyteller)."
+        },
+        {
+          "prefix": "Sns Marketing Hook:",
+          "description": "Explicit instruction on how to hook the viewer in the first 2 seconds based on the vibe."
+        },
+        {
+          "prefix": "Camera Angle:",
+          "description": "REQUIRED Camera angles to use (e.g., Extreme Close-up, Bird's-eye view, Dutch angle)."
+        },
+        {
+          "prefix": "Lens Optical Effects:",
+          "description": "REQUIRED Lens choices and optical effects (e.g., Macro lens, 85mm telephoto, shallow depth of field, dolly zoom)."
+        },
+        {
+          "prefix": "Visual Keywords:",
+          "description": "Key visual ingredients and lighting styles that must permeate the prompt."
+        },
+        {
+          "prefix": "Food Focus Rule:",
+          "description": "RULE 6: MANDATORY HUMAN REACTION. You MUST dedicate the final scene to a close-up shot of an ordinary, relatable local Korean adult (e.g., in their 20s-30s) showing immense surprise and amazement at the food. They MUST NOT eat or chew. CRITICAL SAFETY: DO NOT describe the person as 'attractive', 'sexy', or having an 'open mouth/gasp'. Only describe 'wide eyes' and 'delight' to bypass strict API safety filters. This human reaction scene is absolutely REQUIRED."
+        },
+        {
+          "prefix": "Negative Constraints:",
+          "description": "Strict list of visual anomalies to explicitly avoid generating."
+        },
+        {
+          "prefix": "Image Visual Context:",
+          "description": "Detailed visual analysis extracted from the user's uploaded photo (use colors, textures, lighting)."
+        },
+        {
+          "prefix": "Reference Style Blueprint:",
+          "description": "The extracted exact cinematic directing blueprint from the reference viral video. MUST be applied to the target food."
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Rationale:",
+          "description": "Strategic Plan: (1) How does the Hook work? (2) How are the official Veo 'Subject+Motion+Environment+Angle+Lens' applied? (3) How are negative constraints enforced?"
+        },
+        {
+          "prefix": "Final Veo Json:",
+          "description": "A valid JSON string matching the Master Template: title(A catchy and creative Korean SNS title), hashtags(Array of 3-5 trendy Korean SNS hashtags), metadata, key_elements(English array), negative_prompts(English array), timeline(Array of scenes incorporating the VEO formula)."
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.13",
+      "dspy": "3.1.3",
+      "cloudpickle": "3.1"
+    }
+  }
+}

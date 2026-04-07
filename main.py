@@ -133,19 +133,15 @@ async def generate_promotion_video(
         # VertexVideoService는 metadata, timeline 등을 사용
         generation_result = await vertex_video_service.generate_video(optimized_payload, image_path)
         video_url = generation_result.get("video_url")
-        audio_url = generation_result.get("audio_url")
         
         # 4. 메타데이터 추출
         print("🎉 [Promotion API] 영상 및 오디오 생성 성공! 결과를 프론트엔드로 반환합니다.")
         video_title = optimized_payload.get("title", f"{target}을 위한 {concept}")
         hashtags = optimized_payload.get("hashtags", ["#맛집", "#추천"])
-        audio_script = optimized_payload.get("audio_script", "")
 
         return {
             "status": "success", 
             "video_url": video_url,
-            "audio_url": audio_url,
-            "audio_script": audio_script,
             "video_title": video_title,
             "hashtags": hashtags
         }

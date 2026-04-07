@@ -6,3 +6,4 @@ requests
 google-cloud-aiplatform
 google-generativeai
 google-genai
+dspy-ai>=3.1.2

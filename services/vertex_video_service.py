@@ -12,7 +12,6 @@ from google import genai
 from google.genai import types
 from google.genai.types import GenerateVideosConfig, Part, VideoGenerationReferenceImage
 from services.llm_service import LLMService
-from services.tts_service import TTSService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -37,7 +36,6 @@ class VertexVideoService:
             logger.error(f"❌ Failed to initialize Vertex AI Client: {e}")
 
         self.llm_service = LLMService()
-        self.tts_service = TTSService()
         self.model_name = "veo-2.0-generate-001"
 
     async def generate_video(self, payload: Dict[str, Any], image_path: Optional[str] = None) -> Dict[str, str]:
@@ -50,19 +48,8 @@ class VertexVideoService:
             metadata = optimized_payload.get("metadata", {})
             timeline = optimized_payload.get("timeline", [])
             key_elements = optimized_payload.get("key_elements", [])
-            audio_script = optimized_payload.get("audio_script", "")
             base_style = metadata.get("base_style", "")
             location = metadata.get("location", "")
-            
-            audio_url = None
-            if audio_script:
-                print(f"🎤 [TTS Service] Generating TTS audio for script: {audio_script}")
-                logger.info(f"🎤 Generating TTS audio for script: {audio_script}")
-                audio_filename = f"audio_{int(time.time())}.mp3"
-                local_audio_path = os.path.join("static", "videos", audio_filename)
-                res = await self.tts_service.generate_speech(text=audio_script, output_path=local_audio_path)
-                if res:
-                    audio_url = f"http://localhost:8000/static/videos/{audio_filename}"
             
             timeline_items = []
             for scene in timeline:
@@ -193,7 +180,7 @@ class VertexVideoService:
                 
                 print(f"✅ [Vertex AI Service] Vertex AI Generation Completed! URI: {video_uri}")
                 logger.info(f"✅ Vertex AI Generation Completed! URI: {video_uri}")
-                return {"video_url": video_uri, "audio_url": audio_url}
+                return {"video_url": video_uri}
             else:
                  error_msg = getattr(operation, 'error', 'Unknown Error')
                  raise Exception(f"Vertex AI Generation Failed: {error_msg}")
@@ -202,6 +189,5 @@ class VertexVideoService:
             logger.error(f"❌ Vertex AI Service Error: {e}")
             logger.warning("⚠️ Returning mock URL due to error (check API Key / GCS requirements)")
             return {
-                "video_url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-                "audio_url": None
+                "video_url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
             }
